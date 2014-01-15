@@ -26,6 +26,7 @@ namespace org\haf\oorc;
 
 
 use org\haf\oorc\service\consumer\ServiceFactory;
+use org\haf\oorc\transfer\IRequestSender;
 use org\haf\shared\config\Config;
 
 class RpcConsumer extends Rpc
@@ -40,9 +41,10 @@ class RpcConsumer extends Rpc
     /**
      * @param Config $config
      */
-    public function __construct(Config $config = null)
+    public function __construct(IRequestSender $requestSender, Config $config = null)
     {
         parent::__construct(new ServiceFactory(), $config);
+        $this->requestSender = $requestSender;
     }
 
     /**
@@ -64,12 +66,15 @@ class RpcConsumer extends Rpc
         }
 
         $respond = $this->requestSender->sendRequest($request);
+
         if ($respond->isError()) {
-            throw new service\consumer\RemoteException(
+            /* throw new service\consumer\RemoteException(
                 'Remote throw an error when invoking %s.%s()',
                 $serviceName, $methodName,
                 $respond->getError()
-            );
+            ); */
+            $error = $respond->getError();
+            throw $error;
         }
 
         if ($sessionId = $respond->getExtraData()->get('sessionId')) {
