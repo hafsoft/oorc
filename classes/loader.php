@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-require_once __DIR__ . '/org/haf/shared/php/tool/ClassLoader.php';
+require_once __DIR__ . '/org/haf/shared/php/ClassLoader.php';
 
 \org\haf\shared\php\ClassLoader::installClassRoot(__DIR__, "org\\haf\\oorc\\");
 \org\haf\shared\php\ClassLoader::installClassRoot(__DIR__, "org\\haf\\shared\\");

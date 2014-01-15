@@ -66,7 +66,6 @@ class ClassLoader
 
         foreach ($this->classRoots as $arr) {
             list ($root, $prefix) = $arr;
-            var_dump($arr);
             if ($prefix == '' || substr_compare($className, $prefix, 0, strlen($prefix)) == 0) {
                 $fileName = $root . DIRECTORY_SEPARATOR . $classFile . '.php';
 
