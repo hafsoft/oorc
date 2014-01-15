@@ -7,11 +7,11 @@
  * @date 1/12/14 9:07 PM
  */
 
-namespace org\haf\rcp_test\helper\manager;
+namespace org\haf\rcp_test\helper\service;
 
 use org\haf\oorc\service\ServiceNotFoundException;
 
-class DummyManagerFactory implements \org\haf\oorc\service\IServiceFactory {
+class DummyServiceFactory implements \org\haf\oorc\service\IServiceFactory {
 
     /**
      * @param \org\haf\oorc\Rpc $app

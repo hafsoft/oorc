@@ -7,20 +7,19 @@
  * @date 1/14/14 2:19 PM
  */
 
-namespace org\haf\rcp_test\manager\client;
+namespace org\haf\rcp_test\service\client;
 
 
 use org\haf\oorc\RpcConsumer;
 use org\haf\oorc\service\consumer\Service;
 use org\haf\oorc\service\consumer\ServiceFactory;
-use org\haf\rcp_test\helper\manager\DummyMethodInvoker;
 use org\haf\rcp_test\helper\transport\DummyRequestSender;
 
-class ManagerFactoryTest extends \PHPUnit_Framework_TestCase {
+class ServiceFactoryTest extends \PHPUnit_Framework_TestCase {
 
     public function testCreateManager() {
         $managerFactory = new ServiceFactory(new DummyRequestSender());
-        $app = new RpcConsumer(new DummyMethodInvoker());
+        $app = new RpcConsumer(new DummyRequestSender());
         /** @var Service $manager */
         $manager = $managerFactory->buildService($app, 'test');
 

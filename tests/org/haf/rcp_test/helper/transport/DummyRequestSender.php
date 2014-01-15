@@ -11,6 +11,7 @@ namespace org\haf\rcp_test\helper\transport;
 
 
 use org\haf\oorc\Exception;
+use org\haf\oorc\service\ServiceMethodInvoker;
 use org\haf\oorc\service\ServiceNotFoundException;
 use org\haf\oorc\service\MethodNotAllowedException;
 use org\haf\oorc\service\MethodNotFoundException;
@@ -18,7 +19,7 @@ use org\haf\oorc\Rpc;
 use org\haf\oorc\transfer\IRequestSender;
 use org\haf\oorc\transfer\Request;
 use org\haf\oorc\transfer\Respond;
-use org\haf\rcp_test\helper\manager\Dummy1Service;
+use org\haf\rcp_test\helper\service\Dummy1Service;
 
 class DummyRequestSender implements IRequestSender {
 
@@ -34,24 +35,16 @@ class DummyRequestSender implements IRequestSender {
      */
     public function sendRequest(Request $request)
     {
-        $respond = new Respond($this->app, $request);
+        $respond = new Respond();
 
         try {
-            if ($request->getServiceName() != 'test') {
+            if ($request->getServiceName() != Dummy1Service::_name(true)) {
                 throw new ServiceNotFoundException($request->getServiceName());
             }
 
-            $manager = new Dummy1Service($this->app, 'test', null);
-            if (! $manager->isRemoteAllowed($request->getMethodName())) {
-                throw new MethodNotAllowedException();
-            }
-
-            $method = array(&$manager, 'getDummy');
-            if (! is_callable($method)) {
-                throw new MethodNotFoundException();
-            }
-
-            $data = call_user_func($method, $request->getArguments());
+            $service = new Dummy1Service();
+            $methodInvoker = new ServiceMethodInvoker($service, $request->getMethodName());
+            $data = $methodInvoker->invoke($request->getArguments());
             $respond->setData($data);
         }
 

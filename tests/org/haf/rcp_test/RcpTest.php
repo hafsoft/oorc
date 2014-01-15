@@ -13,12 +13,12 @@ class RcpTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetManager()
     {
-        $managerFactory = new \org\haf\rcp_test\helper\manager\DummyManagerFactory();
+        $managerFactory = new \org\haf\rcp_test\helper\service\DummyServiceFactory();
         $rcp = new \org\haf\oorc\Rpc($managerFactory);
 
         $manager1 = $rcp->getService('dummy1');
         $this->assertNotNull($manager1);
-        $this->assertInstanceOf(\org\haf\rcp_test\helper\manager\Dummy1Service::_name(), $manager1);
+        $this->assertInstanceOf(\org\haf\rcp_test\helper\service\Dummy1Service::_name(), $manager1);
 
         $this->setExpectedException(\org\haf\oorc\service\ServiceNotFoundException::_name());
         $manager2 = $rcp->getService('fake');
@@ -26,7 +26,7 @@ class RcpTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testGetVersion() {
-        $rcp = new \org\haf\oorc\Rpc(new \org\haf\rcp_test\helper\manager\DummyManagerFactory());
+        $rcp = new \org\haf\oorc\Rpc(new \org\haf\rcp_test\helper\service\DummyServiceFactory());
         $this->assertSame(\org\haf\oorc\Rpc::VERSION, $rcp->getVersion());
     }
 }
