@@ -24,6 +24,7 @@
 
 namespace org\haf\oorc;
 
+use org\haf\shared\php\tool\ObjectFactory;
 use org\haf\oorc\object\TObject;
 use org\haf\oorc\serializer\IArraiable;
 use org\haf\oorc\serializer\ISerializable;
@@ -59,12 +60,27 @@ class Exception extends \Exception implements IArraiable
 
     }
 
+
     /**
      * @return array
      */
     public function toArray()
     {
-        // TODO: Implement toArray() method.
+        if (defined('_RCP_DEBUG') && _RCP_DEBUG) {
+            return array(
+                '__message' => $this->message,
+                '__previous' => $this->getPrevious(),
+                '__trace' => $this->getTraceAsString(),
+                '__file' => $this->file,
+                '__line' => $this->line,
+            );
+        }
+        else {
+            return array(
+                '__message' => $this->message,
+                '__previous' => $this->getPrevious(),
+            );
+        }
     }
 
     /**
@@ -73,7 +89,14 @@ class Exception extends \Exception implements IArraiable
      */
     public static function fromArray($array)
     {
-        // TODO: Implement fromArray() method.
+        /** @var Exception $e */
+        // $e = ObjectFactory::constructObject(static::_name());
+        $e = new static();
+        isset($array['__message']) && $e->message = $array['__message'];
+        isset($array['__file']) && $e->file = $array['__file'];
+        isset($array['__line']) && $e->line = $array['__line'];
+        isset($array['__trace']) && $e->message .= "\n\nTrace:\n" . $array['__trace'];
+        return $e;
     }
 
 }
