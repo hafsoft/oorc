@@ -22,9 +22,8 @@
  * THE SOFTWARE.
  */
 
-namespace org\haf\oorc;
+namespace org\haf\oorc\base;
 
-use org\haf\shared\php\tool\ObjectFactory;
 use org\haf\oorc\object\TObject;
 use org\haf\oorc\serializer\IArraiable;
 use org\haf\oorc\serializer\ISerializable;
@@ -68,16 +67,15 @@ class Exception extends \Exception implements IArraiable
     {
         if (defined('_RCP_DEBUG') && _RCP_DEBUG) {
             return array(
-                '__message' => $this->message,
+                '__message'  => $this->message,
                 '__previous' => $this->getPrevious(),
-                '__trace' => $this->getTraceAsString(),
-                '__file' => $this->file,
-                '__line' => $this->line,
+                '__trace'    => $this->getTraceAsString(),
+                '__file'     => $this->file,
+                '__line'     => $this->line,
             );
-        }
-        else {
+        } else {
             return array(
-                '__message' => $this->message,
+                '__message'  => $this->message,
                 '__previous' => $this->getPrevious(),
             );
         }

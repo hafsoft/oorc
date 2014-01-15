@@ -26,7 +26,6 @@ namespace org\haf\oorc\session;
 
 
 use org\haf\oorc\object\Object;
-use org\haf\oorc\Rpc;
 
 /**
  * Class SessionManager

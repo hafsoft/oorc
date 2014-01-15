@@ -10,20 +10,15 @@
 namespace org\haf\rcp_test\helper\transport;
 
 
-use org\haf\oorc\Exception;
+use org\haf\oorc\base\Exception;
 use org\haf\oorc\service\ServiceMethodInvoker;
 use org\haf\oorc\service\ServiceNotFoundException;
-use org\haf\oorc\service\MethodNotAllowedException;
-use org\haf\oorc\service\MethodNotFoundException;
-use org\haf\oorc\Rpc;
 use org\haf\oorc\transfer\IRequestSender;
 use org\haf\oorc\transfer\Request;
 use org\haf\oorc\transfer\Respond;
 use org\haf\rcp_test\helper\service\Dummy1Service;
 
 class DummyRequestSender implements IRequestSender {
-
-    private $app;
 
     public function __construct() {
         // $this->app = $app;

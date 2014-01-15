@@ -25,7 +25,7 @@
 namespace org\haf\oorc\service\consumer;
 
 
-use org\haf\oorc\Exception;
+use org\haf\oorc\base\Exception;
 
 /**
  * Class RemoteException

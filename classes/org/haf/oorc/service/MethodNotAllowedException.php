@@ -25,7 +25,7 @@
 namespace org\haf\oorc\service;
 
 
-use org\haf\oorc\Exception;
+use org\haf\oorc\base\Exception;
 
 class MethodNotAllowedException extends Exception
 {

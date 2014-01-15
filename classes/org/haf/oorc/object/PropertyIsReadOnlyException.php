@@ -24,7 +24,7 @@
 
 namespace org\haf\oorc\object;
 
-use org\haf\oorc\Exception;
+use org\haf\oorc\base\Exception;
 
 class PropertyIsReadOnlyException extends Exception
 {

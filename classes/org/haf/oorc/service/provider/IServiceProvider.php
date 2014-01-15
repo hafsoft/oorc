@@ -25,11 +25,11 @@
 namespace org\haf\oorc\service\provider;
 
 
-use org\haf\oorc\Rpc;
+use org\haf\oorc\base\App;
 use org\haf\oorc\service\IService;
 use org\haf\shared\config\Config;
 
 interface IServiceProvider extends IService
 {
-    public function __construct(Rpc $app = null, Config $config = null);
+    public function __construct(App $app = null, Config $config = null);
 } 

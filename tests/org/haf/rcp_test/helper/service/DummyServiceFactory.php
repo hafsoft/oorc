@@ -14,13 +14,13 @@ use org\haf\oorc\service\ServiceNotFoundException;
 class DummyServiceFactory implements \org\haf\oorc\service\IServiceFactory {
 
     /**
-     * @param \org\haf\oorc\Rpc $app
+     * @param \org\haf\oorc\base\App $app
      * @param string $name
      * @param \org\haf\shared\config\Config|null $config
      * @throws \org\haf\oorc\service\ServiceNotFoundException
      * @return \org\haf\oorc\service\IService
      */
-    public function buildService(\org\haf\oorc\Rpc $app, $name, \org\haf\shared\config\Config $config = null)
+    public function buildService(\org\haf\oorc\base\App $app, $name, \org\haf\shared\config\Config $config = null)
     {
         if ($name == 'dummy1') {
             return new Dummy1Service($app, $name, $config);

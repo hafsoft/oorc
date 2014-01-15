@@ -25,7 +25,7 @@
 namespace org\haf\oorc\serializer;
 
 
-use org\haf\oorc\Exception;
+use org\haf\oorc\base\Exception;
 
 class NotSerializableException extends Exception
 {

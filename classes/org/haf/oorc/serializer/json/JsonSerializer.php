@@ -59,7 +59,7 @@ class JsonSerializer extends Object implements ISerializer
             }
             return $newArray;
         } elseif ($object instanceof IArraiable) {
-            $objectArray = $this->toArrayRecursive($object->toArray());
+            $objectArray               = $this->toArrayRecursive($object->toArray());
             $objectArray['__object__'] = $object->className(true);
             return $objectArray;
         } elseif (is_object($object)) {
@@ -91,7 +91,7 @@ class JsonSerializer extends Object implements ISerializer
             if (isset($array['__object__'])) {
                 $className = ClassStandardization::phpizeClassName($array['__object__']);
                 if (class_exists($className)) {
-                    if (is_subclass_of($className, 'org\haf\oorp\serializer\IArraiable')) {
+                    if (is_subclass_of($className, 'org\haf\oorc\serializer\IArraiable')) {
                         return call_user_func(array($className, 'fromArray'), $array);
                     } else {
                         throw new NotArraiableObjectException('Class %s is not implemented IArraiable interface', $className);

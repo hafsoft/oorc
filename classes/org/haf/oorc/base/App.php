@@ -22,50 +22,51 @@
  * THE SOFTWARE.
  */
 
-namespace org\haf\oorc;
+namespace org\haf\oorc\base;
 
+use org\haf\oorc\object\Object;
+use org\haf\oorc\service\FactoryNotDefinedException;
+use org\haf\oorc\service\IServiceFactory;
+use org\haf\oorc\service\IService;
+use org\haf\oorc\util\NullConfig;
 use org\haf\shared\config\Config;
-use org\haf\shared\php\tool\ObjectFactory;
 
 /**
- * Class Rcp
- *
- * @package org\haf\rcp
  *
  * @property string $name Application name
  * @property string $version Protocol version
  */
-class Rpc extends object\Object
+class App extends Object
 {
 
     const VERSION = '1.0';
 
-    /** @var service\IServiceFactory */
+    /** @var IServiceFactory */
     protected $serviceFactory;
 
     /** @var  Config */
     protected $config;
 
-    /** @var service\IService[] */
+    /** @var IService[] */
     private $services = array();
 
     /** @var  string Application name */
     protected $name = "haf-rcp";
 
     /**
-     * @param service\IServiceFactory $serviceFactory
+     * @param IServiceFactory $serviceFactory
      * @param Config $config [optional] configuration
      */
-    public function __construct(service\IServiceFactory $serviceFactory = null, Config $config = null)
+    public function __construct(IServiceFactory $serviceFactory = null, Config $config = null)
     {
-        $this->config = $config ? : new util\NullConfig();
+        $this->config         = $config ? : new NullConfig();
         $this->serviceFactory = $serviceFactory;
     }
 
     /**
      * @param string $name
-     * @return service\IService
-     * @throws service\ServiceNotFoundException
+     * @throws \org\haf\oorc\service\FactoryNotDefinedException
+     * @return IService
      */
     public function &getService($name)
     {
@@ -74,7 +75,7 @@ class Rpc extends object\Object
 
         if (!isset($this->services[$name])) {
             if ($this->serviceFactory == null) {
-                throw new service\FactoryNotDefinedException();
+                throw new FactoryNotDefinedException();
             }
             $this->services[$name] = $this->serviceFactory->buildService(
                 $this,

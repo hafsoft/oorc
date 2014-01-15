@@ -24,7 +24,7 @@
 
 namespace org\haf\oorc\session;
 
-use org\haf\oorc\Exception;
+use org\haf\oorc\base\Exception;
 
 class HandlerNotDefinedException extends Exception
 {

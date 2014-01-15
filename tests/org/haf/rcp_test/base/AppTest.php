@@ -9,12 +9,12 @@
 namespace org\haf\rcp_test;
 
 
-class RcpTest extends \PHPUnit_Framework_TestCase {
+class AppTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetManager()
     {
         $managerFactory = new \org\haf\rcp_test\helper\service\DummyServiceFactory();
-        $rcp = new \org\haf\oorc\Rpc($managerFactory);
+        $rcp = new \org\haf\oorc\base\App($managerFactory);
 
         $manager1 = $rcp->getService('dummy1');
         $this->assertNotNull($manager1);
@@ -26,8 +26,8 @@ class RcpTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testGetVersion() {
-        $rcp = new \org\haf\oorc\Rpc(new \org\haf\rcp_test\helper\service\DummyServiceFactory());
-        $this->assertSame(\org\haf\oorc\Rpc::VERSION, $rcp->getVersion());
+        $rcp = new \org\haf\oorc\base\App(new \org\haf\rcp_test\helper\service\DummyServiceFactory());
+        $this->assertSame(\org\haf\oorc\base\App::VERSION, $rcp->getVersion());
     }
 }
  

@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-namespace org\haf\oorc;
+namespace org\haf\oorc\base;
 
 
 class VersionNotSupportedException extends Exception

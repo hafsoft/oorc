@@ -22,25 +22,22 @@
  * THE SOFTWARE.
  */
 
-namespace org\haf\oorc\service\consumer;
+namespace org\haf\oorc\http;
 
-use org\haf\oorc\service\IService;
-use org\haf\oorc\service\IServiceFactory;
-use org\haf\oorc\base\App;
+use org\haf\oorc\base\ServiceConsumer as BaseConsumer;
+use org\haf\oorc\http\connection\IConnectionManager;
 use org\haf\shared\config\Config;
 
-class ServiceFactory implements IServiceFactory
+class ServiceConsumer extends BaseConsumer
 {
 
-    /**
-     * @param App $app
-     * @param string $name
-     * @param Config $config
-     * @return IService
-     */
-    public function buildService(App $app, $name, Config $config = null)
+    public function __construct($url, IConnectionManager $connectionManager = null, Config $config = null)
     {
-        // todo: check if $app is instance of RcpConsumer
-        return new Service($app, $name);
+        if ($connectionManager == null) {
+            $connectionManager = new connection\curl\ConnectionManager();
+        }
+
+        parent::__construct(new RequestSender($url, $connectionManager), $config);
     }
-}
+
+} 

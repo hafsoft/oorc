@@ -22,20 +22,26 @@
  * THE SOFTWARE.
  */
 
-namespace org\haf\oorc\transfer\http;
+namespace org\haf\oorc\http;
 
 
-use org\haf\oorc\object\JsonSerializer;
-use org\haf\oorc\object\Object;
-use org\haf\oorc\object\PhpSerializer;
-use org\haf\oorc\util\CurlHttpRequest;
+use org\haf\oorc\http\connection\IConnectionManager;
+use org\haf\oorc\util\ClassStandardization;
 use org\haf\oorc\transfer\AbstractRequestSender;
 
-class HttpRequestSender extends AbstractRequestSender
+class RequestSender extends AbstractRequestSender
 {
-
+    /** @var  string */
     private $serverUrl;
-    private $currentRespond;
+
+    /** @var  IConnectionManager */
+    private $connectionManager;
+
+    public function __construct($url, IConnectionManager $connectionManager = null)
+    {
+        $this->serverUrl = $url;
+        $this->connectionManager;
+    }
 
     /**
      * @param string $serializerClass
@@ -44,17 +50,16 @@ class HttpRequestSender extends AbstractRequestSender
      */
     protected function sendSerializedRequest($serializerClass, $serializedRequest)
     {
-        $contentType = 'text/plain';
+        $contentType = call_user_func([ClassStandardization::phpizeClassName($serializerClass), '_name']);
 
-        $curl = new CurlHttpRequest();
-        $curl->open('POST', $this->serverUrl);
-        $curl->addHeader('Content-type', $contentType);
-        $curl->addHeader('X-Serializer', $serializerClass);
-        $curl->addHeader('Content-size', strlen($serializedRequest));
+        $connection = $this->connectionManager->open('POST', $this->serverUrl);
+        $connection->addHeader('Content-type', $contentType);
+        $connection->addHeader('Content-size', strlen($serializedRequest));
+        $connection->addHeader('X-Serializer', $serializerClass);
+        $connection->addHeader('Connection', 'close');
+        $connection->setData($serializedRequest);
 
-        if ($respond = $curl->send($serializedRequest)) {
-            return $respond;
-        }
-        return null;
+        return $connection->sendAndReturnRespond();
     }
+
 }

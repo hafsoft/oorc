@@ -22,23 +22,24 @@
  * THE SOFTWARE.
  */
 
-namespace org\haf\oorc;
-
+namespace org\haf\oorc\base;
 
 use org\haf\oorc\service\consumer\ServiceFactory;
 use org\haf\oorc\transfer\IRequestSender;
+use org\haf\oorc\transfer\Request;
 use org\haf\shared\config\Config;
 
-class RpcConsumer extends Rpc
+class ServiceConsumer extends App
 {
 
-    /** @var  transfer\IRequestSender */
+    /** @var  IRequestSender */
     private $requestSender;
 
     /** @var  string */
     private $sessionId;
 
     /**
+     * @param IRequestSender $requestSender
      * @param Config $config
      */
     public function __construct(IRequestSender $requestSender, Config $config = null)
@@ -51,12 +52,12 @@ class RpcConsumer extends Rpc
      * @param string $serviceName
      * @param string $methodName
      * @param array $arguments
-     * @throws service\consumer\RemoteException
+     * @throws Exception
      * @return mixed
      */
     public function callServiceMethod($serviceName, $methodName, array $arguments = null)
     {
-        $request = new transfer\Request();
+        $request = new Request();
         $request->setServiceName($serviceName);
         $request->setMethodName($methodName);
         $request->setArguments($arguments);

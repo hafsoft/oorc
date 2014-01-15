@@ -22,19 +22,28 @@
  * THE SOFTWARE.
  */
 
-namespace org\haf\oorc;
+namespace org\haf\oorc\base;
 
 
+use org\haf\oorc\service\provider\ServiceFactory;
 use org\haf\oorc\service\ServiceMethodInvoker;
+use org\haf\oorc\session\SessionManager;
 use org\haf\oorc\transfer\IRequestHandler;
 use org\haf\oorc\transfer\Request;
 use org\haf\oorc\transfer\Respond;
+use org\haf\shared\config\Config;
+use org\haf\shared\php\tool\ObjectFactory;
 
-class RpcProvider extends Rpc
+class ServiceProvider extends App
 {
 
-    /** @var  session\SessionManager */
+    /** @var  SessionManager */
     protected $session;
+
+    public function __construct(Config $config = null)
+    {
+        parent::__construct(new ServiceFactory(), $config);
+    }
 
     /**
      * @param IRequestHandler $requestHandler
@@ -51,7 +60,7 @@ class RpcProvider extends Rpc
      * @param Request $request
      * @return \org\haf\oorc\transfer\Respond
      */
-    public function processRequest(Request $request)
+    protected function processRequest(Request $request)
     {
         $respond = new Respond($this);
         try {
@@ -82,6 +91,25 @@ class RpcProvider extends Rpc
         return $respond;
     }
 
+    protected function isVersionSupported($version)
+    {
+        return $version == $this->getVersion();
+    }
+
+    public function getSession()
+    {
+        if ($this->session = null) {
+            $sessionConfig = $this->config->get('cache');
+            $handlerClass  = $sessionConfig->get('class', 'org\haf\rcp\session\php\Handler');
+            // todo: check if handlerClass is subclass of session\IHandler
+            /** @var \org\haf\oorc\session\IHandler $sessionHandler */
+            $sessionHandler = ObjectFactory::constructObject($handlerClass, array(&$this, &$sessionConfig));
+            $this->session  = new SessionManager($sessionHandler);
+        }
+
+        return $this->session;
+    }
+
     /**
      * @param $serviceName
      * @param $methodName
@@ -93,26 +121,6 @@ class RpcProvider extends Rpc
         $service = $this->getService($serviceName);
         $method  = new ServiceMethodInvoker($service, $methodName);
         return $method->invoke($arguments);
-    }
-
-    protected function isVersionSupported($version)
-    {
-        return $version == $this->getVersion();
-    }
-
-
-    public function getSession()
-    {
-        if ($this->session = null) {
-            $sessionConfig = $this->config->get('cache');
-            $handlerClass  = $sessionConfig->get('class', 'org\haf\rcp\session\php\Handler');
-            // todo: check if handlerClass is subclass of session\IHandler
-            /** @var session\IHandler $sessionHandler */
-            $sessionHandler = ObjectFactory::constructObject($handlerClass, array(&$this, &$sessionConfig));
-            $this->session  = new session\SessionManager($sessionHandler);
-        }
-
-        return $this->session;
     }
 
 }

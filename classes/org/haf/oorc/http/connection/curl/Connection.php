@@ -21,26 +21,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+namespace org\haf\oorc\http\connection\curl;
 
-namespace org\haf\oorc\service\consumer;
 
-use org\haf\oorc\service\IService;
-use org\haf\oorc\service\IServiceFactory;
-use org\haf\oorc\base\App;
-use org\haf\shared\config\Config;
+use org\haf\oorc\http\connection\IConnection;
+use org\haf\oorc\util\CurlHttpRequest;
 
-class ServiceFactory implements IServiceFactory
+class Connection implements IConnection
 {
 
-    /**
-     * @param App $app
-     * @param string $name
-     * @param Config $config
-     * @return IService
-     */
-    public function buildService(App $app, $name, Config $config = null)
+    private $curl;
+
+    private $data;
+
+    public function __construct($method, $url, $user = null, $password = null)
     {
-        // todo: check if $app is instance of RcpConsumer
-        return new Service($app, $name);
+        $this->curl = new CurlHttpRequest($method, $url, $user, $password);
+    }
+
+    public function addHeader($name, $value)
+    {
+        $this->curl->addHeader($name, $value);
+    }
+
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
+
+    public function sendAndReturnRespond()
+    {
+        return $this->curl->send($this->data);
+    }
+
+    public function close()
+    {
+        // TODO: Implement close() method.
     }
 }

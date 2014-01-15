@@ -25,7 +25,7 @@
 namespace org\haf\oorc\transfer;
 
 
-use org\haf\oorc\Exception;
+use org\haf\oorc\base\Exception;
 
 class SerializerNotSupportedException extends Exception
 {

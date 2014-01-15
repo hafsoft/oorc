@@ -24,7 +24,7 @@
 
 namespace org\haf\oorc\service\consumer;
 
-use org\haf\oorc\RpcConsumer;
+use org\haf\oorc\base\ServiceConsumer;
 use org\haf\oorc\transfer\IRequestSender;
 use org\haf\oorc\transfer\Request;
 
@@ -43,14 +43,14 @@ class RemoteMethodInvoker
     }
 
     /**
-     * @param RpcConsumer $app
+     * @param ServiceConsumer $app
      * @param $serviceName
      * @param $methodName
      * @param $arguments
      * @return mixed
-     * @throws \org\haf\oorc\Exception
+     * @throws \org\haf\oorc\base\Exception
      */
-    public function invokeRemoteMethod(RpcConsumer $app, $serviceName, $methodName, $arguments)
+    public function invokeRemoteMethod(ServiceConsumer $app, $serviceName, $methodName, $arguments)
     {
         $request = new Request($app);
         $request->setServiceName($serviceName);

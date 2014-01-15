@@ -22,25 +22,30 @@
  * THE SOFTWARE.
  */
 
-namespace org\haf\oorc\service\consumer;
+namespace org\haf\oorc\http;
 
-use org\haf\oorc\service\IService;
-use org\haf\oorc\service\IServiceFactory;
-use org\haf\oorc\base\App;
+use org\haf\oorc\base\ServiceProvider as BaseProvider;
 use org\haf\shared\config\Config;
 
-class ServiceFactory implements IServiceFactory
+/**
+ * Service Provider using HTTP
+ * example:
+ * <code>
+ *   // index.php
+ *   include 'path/to/loader.php';
+ *   \org\haf\oorc\http\ServiceProvider::run();
+ * </code>
+ *
+ * @package org\haf\oorc\http
+ */
+class ServiceProvider extends BaseProvider
 {
 
-    /**
-     * @param App $app
-     * @param string $name
-     * @param Config $config
-     * @return IService
-     */
-    public function buildService(App $app, $name, Config $config = null)
+    public static function run(Config $config = null)
     {
-        // todo: check if $app is instance of RcpConsumer
-        return new Service($app, $name);
+        /** @var ServiceProvider $provider */
+        $provider       = new static($config);
+        $requestHandler = new RequestHandler();
+        $provider->handleRequest($requestHandler);
     }
-}
+} 

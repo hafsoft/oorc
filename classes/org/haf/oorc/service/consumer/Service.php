@@ -27,26 +27,21 @@ namespace org\haf\oorc\service\consumer;
 
 use org\haf\oorc\service\IService;
 use org\haf\oorc\object\Object;
-use org\haf\oorc\Rpc;
-use org\haf\oorc\RpcConsumer;
-use org\haf\oorc\transfer\IRequestSender;
-use org\haf\oorc\transfer\Request;
-use org\haf\oorc\transfer\Respond;
-use org\haf\shared\config\Config;
+use org\haf\oorc\base\ServiceConsumer;
 
 class Service extends Object implements IService
 {
     /** @var string manager name */
     private $name;
 
-    /** @var \org\haf\oorc\RpcConsumer application */
+    /** @var \org\haf\oorc\base\ServiceConsumer application */
     private $app;
 
     /**
-     * @param RpcConsumer $app
+     * @param ServiceConsumer $app
      * @param string $name
      */
-    public function __construct(RpcConsumer $app, $name)
+    public function __construct(ServiceConsumer $app, $name)
     {
         $this->app  = $app;
         $this->name = $name;

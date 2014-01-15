@@ -26,7 +26,7 @@ namespace org\haf\oorc\service\provider;
 
 
 use org\haf\oorc\object\Object;
-use org\haf\oorc\Rpc;
+use org\haf\oorc\base\App;
 use org\haf\oorc\service\IService;
 use org\haf\oorc\service\IServiceFactory;
 use org\haf\oorc\service\ServiceNotFoundException;
@@ -38,13 +38,13 @@ class ServiceFactory extends Object implements IServiceFactory
 {
 
     /**
-     * @param Rpc $app
+     * @param App $app
      * @param string $name
      * @param Config $config
      * @return IService
      * @throws ServiceNotFoundException
      */
-    public function buildService(Rpc $app, $name, Config $config = null)
+    public function buildService(App $app, $name, Config $config = null)
     {
         $className = ClassStandardization::phpizeClassName($name);
         if (class_exists($className) && is_subclass_of($className, 'org\haf\oorc\service\provider\IServiceProvider')) {

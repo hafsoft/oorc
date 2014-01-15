@@ -25,17 +25,17 @@
 namespace org\haf\oorc\service;
 
 
-use org\haf\oorc\Rpc;
+use org\haf\oorc\base\App;
 use org\haf\shared\config\Config;
 
 interface IServiceFactory
 {
     /**
-     * @param Rpc $app
+     * @param App $app
      * @param string $name
      * @param Config $config
      * @return IService
      * @throws ServiceNotFoundException
      */
-    public function buildService(Rpc $app, $name, Config $config = null);
+    public function buildService(App $app, $name, Config $config = null);
 }

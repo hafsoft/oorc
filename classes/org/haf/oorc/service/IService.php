@@ -24,9 +24,6 @@
 
 namespace org\haf\oorc\service;
 
-use org\haf\oorc\Rpc;
-use org\haf\shared\config\Config;
-
 interface IService
 {
 

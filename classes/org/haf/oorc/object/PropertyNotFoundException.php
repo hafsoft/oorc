@@ -25,8 +25,7 @@
 namespace org\haf\oorc\object;
 
 
-use org\haf\oorc\Exception;
-use org\haf\oorc\Rpc;
+use org\haf\oorc\base\Exception;
 
 class PropertyNotFoundException extends Exception
 {

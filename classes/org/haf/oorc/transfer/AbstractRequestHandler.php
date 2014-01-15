@@ -24,7 +24,6 @@
 
 namespace org\haf\oorc\transfer;
 
-use org\haf\oorc\RpcProvider;
 use org\haf\oorc\serializer\ISerializer;
 use org\haf\shared\php\tool\ObjectFactory;
 
@@ -59,7 +58,7 @@ abstract class AbstractRequestHandler implements IRequestHandler
     {
         $className = $this->getSerializerClass();
         if (!isset($this->serializerCache[$className])) {
-            if (class_exists($className) && is_subclass_of($className, 'org\haf\oorp\object\ISerializer')) {
+            if (class_exists($className) && is_subclass_of($className, 'org\haf\oorc\object\ISerializer')) {
                 $this->serializerCache[$className] = ObjectFactory::constructObject($className);
             } else {
                 throw new SerializerNotSupportedException('Serializer %s is not supported', $className);

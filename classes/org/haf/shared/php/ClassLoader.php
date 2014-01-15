@@ -58,10 +58,12 @@ class ClassLoader
 
     public function autoLoad($className)
     {
-        if (DIRECTORY_SEPARATOR !== '\\')
-            $classFile = str_replace('\\', DIRECTORY_SEPARATOR, $className); // for unix
-        else
+        if (DIRECTORY_SEPARATOR !== '\\') {
+            $classFile = str_replace('\\', DIRECTORY_SEPARATOR, $className);
+        } // for unix
+        else {
             $classFile = $className;
+        }
 
 
         foreach ($this->classRoots as $arr) {

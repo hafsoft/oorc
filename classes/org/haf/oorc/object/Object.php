@@ -24,10 +24,6 @@
 
 namespace org\haf\oorc\object;
 
-
-use org\haf\oorc\Exception;
-use org\haf\oorc\util\ClassStandardization;
-
 abstract class Object extends \stdClass implements IObject
 {
     use TObject;

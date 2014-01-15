@@ -9,8 +9,6 @@
 
 namespace org\haf\rcp_test\service\client;
 
-
-use org\haf\oorc\service\consumer\RemoteException;
 use org\haf\rcp_test\helper\service\Dummy1Service;
 use org\haf\rcp_test\helper\transport\DummyRequestSender;
 
@@ -22,7 +20,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function __construct()
     {
-        $app           = $app = new \org\haf\oorc\RpcConsumer(new DummyRequestSender());
+        $app           = $app = new \org\haf\oorc\base\ServiceConsumer(new DummyRequestSender());
         $this->service = new \org\haf\oorc\service\consumer\Service($app, Dummy1Service::_name(true));
     }
 
@@ -44,6 +42,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testNotFound() {
         $this->setExpectedException(\org\haf\oorc\service\MethodNotFoundException::_name());
+        /** @noinspection PhpUndefinedMethodInspection */
         $result = $this->service->notExistMethod();
         $this->assertNull($result);
     }

@@ -22,25 +22,38 @@
  * THE SOFTWARE.
  */
 
-namespace org\haf\oorc\service\consumer;
+namespace org\haf\oorc\http;
 
-use org\haf\oorc\service\IService;
-use org\haf\oorc\service\IServiceFactory;
-use org\haf\oorc\base\App;
-use org\haf\shared\config\Config;
 
-class ServiceFactory implements IServiceFactory
+use org\haf\oorc\transfer\AbstractRequestHandler;
+use org\haf\oorc\util\ClassStandardization;
+
+/**
+ * Class HttpRequestHandler
+ *
+ *
+ * @package org\haf\rcp\transfer\http
+ */
+class RequestHandler extends AbstractRequestHandler
 {
 
-    /**
-     * @param App $app
-     * @param string $name
-     * @param Config $config
-     * @return IService
-     */
-    public function buildService(App $app, $name, Config $config = null)
+    protected function getSerializerClass()
     {
-        // todo: check if $app is instance of RcpConsumer
-        return new Service($app, $name);
+        if (isset($_REQUEST['HTTP_X_SERIALIZER'])) {
+            return ClassStandardization::phpizeClassName($_REQUEST['HTTP_X_SERIALIZER']);
+        }
+        return null; // throw new Exception
+    }
+
+    protected function getRequestString()
+    {
+        return file_get_contents('php://input');
+    }
+
+    protected function sendRespondString($respondString)
+    {
+        header('Content-size: ' . $this->getSerializer()->getMimeType());
+        header('Content-type: text/plain');
+        echo $respondString;
     }
 }

@@ -21,26 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+namespace org\haf\oorc\http\connection\curl;
 
-namespace org\haf\oorc\service\consumer;
 
-use org\haf\oorc\service\IService;
-use org\haf\oorc\service\IServiceFactory;
-use org\haf\oorc\base\App;
-use org\haf\shared\config\Config;
+use org\haf\oorc\http\connection\IConnection;
+use org\haf\oorc\http\connection\IConnectionManager;
+use org\haf\oorc\object\Object;
 
-class ServiceFactory implements IServiceFactory
+class ConnectionManager extends Object implements IConnectionManager
 {
 
     /**
-     * @param App $app
-     * @param string $name
-     * @param Config $config
-     * @return IService
+     * @param string $method GET or POST
+     * @param string $url
+     * @param string $user
+     * @param string $password
+     * @return IConnection
      */
-    public function buildService(App $app, $name, Config $config = null)
+    public function open($method, $url, $user = null, $password = null)
     {
-        // todo: check if $app is instance of RcpConsumer
-        return new Service($app, $name);
+        return new Connection($method, $url, $user, $password);
     }
 }

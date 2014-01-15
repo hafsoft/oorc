@@ -21,40 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+namespace org\haf\oorc\http\connection;
 
-namespace org\haf\oorc\transfer\http;
 
-
-use org\haf\oorc\serializer\json\JsonSerializer;
-use org\haf\oorc\transfer\AbstractRequestHandler;
-use org\haf\oorc\util\ClassStandardization;
-
-/**
- * Class HttpRequestHandler
- *
- *
- * @package org\haf\rcp\transfer\http
- */
-class HttpRequestHandler extends AbstractRequestHandler
+interface IConnection
 {
 
-    protected function getSerializerClass()
-    {
-        if (isset($_REQUEST['HTTP_X_SERIALIZER'])) {
-            return ClassStandardization::phpizeClassName($_REQUEST['HTTP_X_SERIALIZER']);
-        }
-        return null; // throw new Exception
-    }
+    public function addHeader($name, $value);
 
-    protected function getRequestString()
-    {
-        return file_get_contents('php://input');
-    }
+    public function setData($data);
 
-    protected function sendRespondString($respondString)
-    {
-        header('Content-size: ' . $this->getSerializer()->getMimeType());
-        header('Content-type: text/plain');
-        echo $respondString;
-    }
-}
+    public function sendAndReturnRespond();
+
+    public function close();
+} 

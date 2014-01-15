@@ -24,11 +24,8 @@
 
 namespace org\haf\oorc\transfer;
 
-use org\haf\oorc\object\Object;
 use org\haf\oorc\object\SerializableObject;
-use org\haf\oorc\Rpc;
 use org\haf\oorc\serializer\IArraiable;
-use org\haf\oorc\serializer\ISerializable;
 use org\haf\oorc\util\Dict;
 
 class Request extends SerializableObject implements IArraiable

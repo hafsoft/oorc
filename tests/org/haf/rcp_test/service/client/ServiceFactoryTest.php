@@ -10,7 +10,7 @@
 namespace org\haf\rcp_test\service\client;
 
 
-use org\haf\oorc\RpcConsumer;
+use org\haf\oorc\base\ServiceConsumer;
 use org\haf\oorc\service\consumer\Service;
 use org\haf\oorc\service\consumer\ServiceFactory;
 use org\haf\rcp_test\helper\transport\DummyRequestSender;
@@ -19,7 +19,7 @@ class ServiceFactoryTest extends \PHPUnit_Framework_TestCase {
 
     public function testCreateManager() {
         $managerFactory = new ServiceFactory(new DummyRequestSender());
-        $app = new RpcConsumer(new DummyRequestSender());
+        $app = new ServiceConsumer(new DummyRequestSender());
         /** @var Service $manager */
         $manager = $managerFactory->buildService($app, 'test');
 
